@@ -1,1 +1,92 @@
 @import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-shadows, "Shadows Into Light"), "Comic Sans MS", cursive;
+}
+
+:root {
+  --blue: #4a56d4;
+  --lime: #d4ff3a;
+  color-scheme: dark;
+  background: var(--blue);
+  color: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--blue);
+  font-family: var(--font-shadows, "Shadows Into Light"), "Comic Sans MS", cursive;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #ffd84d;
+  color: #14092e;
+}
+
+/* ---------- Audio player ---------- */
+
+audio {
+  color-scheme: light;
+  border-radius: 0;
+}
+
+audio::-webkit-media-controls-panel {
+  background-color: #ffffff;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bar {
+  from {
+    transform: scaleY(0.15);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
