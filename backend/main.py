@@ -11,9 +11,22 @@ from fastapi.responses import FileResponse
 from instagrapi import Client
 from pydantic import BaseModel, HttpUrl
 from starlette.background import BackgroundTask
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI(title="Instagram Audio Downloader")
 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "https://instaaud.vercel.app",
+    ],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
+)
 
 class ExtractRequest(BaseModel):
     url: HttpUrl
@@ -148,3 +161,34 @@ def extract_audio(body: ExtractRequest):
             "Could not retrieve this Reel. It may be unavailable, "
             "or Instagram may require authentication."
         )
+
+
+
+
+@app.get("/ffmpeg-check")
+def ffmpeg_check():
+    try:
+        result = subprocess.run(
+            ["ffmpeg", "-version"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=True,
+        )
+
+        return {
+            "installed": True,
+            "version": result.stdout.splitlines()[0],
+        }
+
+    except FileNotFoundError:
+        return {
+            "installed": False,
+            "error": "FFmpeg is not installed or is not in PATH.",
+        }
+
+    except subprocess.SubprocessError as e:
+        return {
+            "installed": False,
+            "error": str(e),
+        }
