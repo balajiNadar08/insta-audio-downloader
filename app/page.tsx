@@ -39,6 +39,12 @@ export default function Home() {
   const audioUrlRef = useRef("");
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  const [year, setYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
   useEffect(() => {
     return () => {
       if (audioUrlRef.current) {
@@ -367,7 +373,7 @@ export default function Home() {
         <footer className="mt-auto w-full pt-14 sm:pt-16">
           <div className="flex  items-center justify-between gap-4 border-t-2 border-white/60 pt-5 sm:flex-row">
             <span className="text-xl text-white [text-shadow:2px_2px_0_#14092e]">
-              InstaAud © {new Date().getFullYear()}
+              InstaAud © {year ?? ""}
             </span>
 
             <div className="flex items-center gap-3">
