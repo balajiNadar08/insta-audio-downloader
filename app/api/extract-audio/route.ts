@@ -9,9 +9,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const backendUrl = process.env.PYTHON_BACKEND_URL;
+    const backendUrl = process.env.PYTHON_BACKEND_URL?.replace(/\/+$/, "");
 
     if (!backendUrl) {
+      console.error("PYTHON_BACKEND_URL is not configured.");
+
       return Response.json(
         { error: "Python backend URL is not configured." },
         { status: 500 },
@@ -33,16 +35,23 @@ export async function POST(request: Request) {
 
       return Response.json(
         {
-          error: error?.detail || "Unable to extract audio.",
+          error: error?.detail || error?.error || "Unable to extract audio.",
         },
         { status: upstream.status },
+      );
+    }
+
+    if (!upstream.body) {
+      return Response.json(
+        { error: "The backend returned an empty response." },
+        { status: 502 },
       );
     }
 
     return new Response(upstream.body, {
       status: 200,
       headers: {
-        "Content-Type": "audio/mpeg",
+        "Content-Type": upstream.headers.get("Content-Type") || "audio/mpeg",
         "Content-Disposition": 'attachment; filename="instagram-audio.mp3"',
         "Cache-Control": "no-store",
       },
@@ -50,9 +59,15 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Audio extraction request failed:", error);
 
+    const isTimeout = error instanceof Error && error.name === "TimeoutError";
+
     return Response.json(
-      { error: "The extraction service is unavailable." },
-      { status: 502 },
+      {
+        error: isTimeout
+          ? "The request timed out. Please try again."
+          : "The extraction service is unavailable. Please try again shortly.",
+      },
+      { status: isTimeout ? 504 : 502 },
     );
   }
 }
