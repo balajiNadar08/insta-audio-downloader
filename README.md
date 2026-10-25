@@ -10,6 +10,8 @@ A simple, modern web application designed to help users extract audio from Insta
   <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
 </p>
 
 <p>
@@ -31,7 +33,7 @@ Instead of navigating complicated software or manually processing video files, u
 ## Tech Stack
 
 <p align="center">
-   <img src="https://skillicons.dev/icons?i=nextjs,react,typescript,tailwind,python,fastapi,ffmpeg,vercel,render&perline=5" alt="InstaAud Tech Stack" />
+   <img src="https://skillicons.dev/icons?i=nextjs,react,typescript,tailwind,python,fastapi,vercel&perline=4" alt="InstaAud Tech Stack" />
 </p>
 
 | Technology | Purpose |
